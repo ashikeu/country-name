@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        border: 1px solid black;
+        height: 200px;
+        width: 300px;
+        border-radius: 10px;
+        box-shadow: 5px 10px #888888;
+        float: left;
+        margin: 10px;
+        padding-top: 5px;
+        padding-left: 5px;
+        padding-bottom: 5px;
+        padding-right: 5px;
+      }
+      div:hover {
+        cursor: pointer;
+      }
+      h1 {
+        color: blueviolet;
+        margin-top: -5px;
+      }
+      h4 {
+        color: darkslategray;
+      }
+      /* img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      } */
+    </style>
+  </head>
+  <body>
+    <script>
+      const apiLink = 'https://restcountries.eu/rest/v2/all';
+      //console.log(apiLink);
+      fetch(apiLink)
+        .then((res) => res.json())
+        .then((data) => {
+          //console.log(data[0].alpha2Code);
+          for (i = 0; i < data.length; i++) {
+            var innerDiv = document.createElement('div');
+            var name = document.createElement('h1');
+            var city = document.createElement('h4');
+            var flag = document.createElement('img');
+            name.innerText = data[i].name;
+            city.innerText = 'Capital : ' + data[i].capital;
+            flag.setAttribute('src', data[i].flag);
+            flag.setAttribute('height', '50');
+            flag.setAttribute('width', '80');
+            innerDiv.setAttribute('id', 'country-' + i);
+            innerDiv.setAttribute('onclick', 'showDetail(event)');
+            // The variable iDiv is still good... Just append to it.
+            innerDiv.appendChild(flag);
+            innerDiv.appendChild(name);
+            innerDiv.appendChild(city);
+            document.getElementsByTagName('body')[0].appendChild(innerDiv);
+          }
+          console.log(data);
+          //   console.log(data[0].capital);
+          //   console.log(data[0].population);
+        });
+      function showDetail(event) {
+        const country = document.getElementById(event.currentTarget.id);
+        //alert(event.currentTarget.id);
+        alert(country.innerText);
+      }
+    </script>
+  </body>
+</html>
